@@ -1,0 +1,590 @@
+C:\Users\KaushikTalathi\Documents\Redstack-Power\ocp4-upi-powervm>terraform plan --var-file=data\var-discon-cluster.var -out discon-cluster
+module.masternodes.data.ignition_file.m_hostname[2]: Reading...
+module.bootstrapnode.data.ignition_file.b_hostname: Reading...
+module.masternodes.data.ignition_file.m_hostname[0]: Reading...
+module.masternodes.data.ignition_file.m_hostname[1]: Reading...
+module.masternodes.data.ignition_file.m_hostname[2]: Read complete after 0s [id=0c163cb1c5dd992d636e27b372616311c7c43967102261b4f85f9ca00dadf964]
+module.masternodes.data.ignition_file.m_hostname[0]: Read complete after 0s [id=7551bfa9e87523c711bf18607b8af5ccfee1657ea6c4817bbc3dd2186602f590]
+module.bootstrapnode.data.ignition_file.b_hostname: Read complete after 0s [id=1ec8928da9e89f9b35deb26dd484665fda91d99d73e31330dce71edf3a4e19cc]
+module.masternodes.data.ignition_file.m_hostname[1]: Read complete after 0s [id=3a19b43cbd34e4811a658630d198c68ef3f2a95ead84d014b2ec674c9602bd6e]
+module.workernodes.data.openstack_compute_flavor_v2.worker: Reading...
+module.bastion.data.openstack_compute_flavor_v2.bastion: Reading...
+module.bootstrapnode.data.openstack_compute_flavor_v2.bootstrap: Reading...
+module.masternodes.data.openstack_compute_flavor_v2.master: Reading...
+module.network.data.openstack_networking_network_v2.network: Reading...
+module.network.data.openstack_networking_network_v2.network: Read complete after 2s [id=1762f355-b17e-4d13-9bca-d5b53c929ab0]
+module.network.data.openstack_networking_subnet_v2.subnet: Reading...
+module.network.data.openstack_networking_subnet_v2.subnet: Read complete after 1s [id=ae643a65-d0fc-4408-90c6-a820340bfade]
+module.bastion.data.openstack_compute_flavor_v2.bastion: Read complete after 5s [id=43209d9c-8e92-4e5c-b663-03d36eca45b1]
+module.workernodes.data.openstack_compute_flavor_v2.worker: Read complete after 5s [id=b16967a1-0aa4-431b-8b5d-292fd9133606]
+module.bootstrapnode.data.openstack_compute_flavor_v2.bootstrap: Read complete after 5s [id=b16967a1-0aa4-431b-8b5d-292fd9133606]
+module.masternodes.data.openstack_compute_flavor_v2.master: Read complete after 5s [id=81002031-afef-475f-b011-6d782be21535]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # random_id.label[0] will be created
+  + resource "random_id" "label" {
+      + b64_std     = (known after apply)
+      + b64_url     = (known after apply)
+      + byte_length = 2
+      + dec         = (known after apply)
+      + hex         = (known after apply)
+      + id          = (known after apply)
+      + prefix      = "kt-discon-"
+    }
+
+  # module.bastion.null_resource.bastion_init[0] will be created
+  + resource "null_resource" "bastion_init" {
+      + id = (known after apply)
+    }
+
+  # module.bastion.null_resource.bastion_packages[0] will be created
+  + resource "null_resource" "bastion_packages" {
+      + id = (known after apply)
+    }
+
+  # module.bastion.null_resource.bastion_register[0] will be created
+  + resource "null_resource" "bastion_register" {
+      + id       = (known after apply)
+      + triggers = {
+          + "bastion_ip"         = (known after apply)
+          + "connection_timeout" = "45"
+          + "jump_host"          = null
+          + "private_key"        = <<-EOT
+                -----BEGIN OPENSSH PRIVATE KEY-----
+                
+                -----END OPENSSH PRIVATE KEY-----
+            EOT
+          + "rhel_username"      = "root"
+          + "ssh_agent"          = "false"
+        }
+    }
+
+  # module.bastion.null_resource.enable_repos[0] will be created
+  + resource "null_resource" "enable_repos" {
+      + id = (known after apply)
+    }
+
+  # module.bastion.openstack_compute_instance_v2.bastion[0] will be created
+  + resource "openstack_compute_instance_v2" "bastion" {
+      + access_ip_v4        = (known after apply)
+      + access_ip_v6        = (known after apply)
+      + all_metadata        = (known after apply)
+      + all_tags            = (known after apply)
+      + availability_zone   = "e980"
+      + created             = (known after apply)
+      + flavor_id           = "43209d9c-8e92-4e5c-b663-03d36eca45b1"
+      + flavor_name         = (known after apply)
+      + force_delete        = false
+      + id                  = (known after apply)
+      + image_id            = "ea211f71-2ce1-457d-8b63-05b0d2b6a417"
+      + image_name          = (known after apply)
+      + key_pair            = (known after apply)
+      + name                = (known after apply)
+      + power_state         = "active"
+      + region              = (known after apply)
+      + security_groups     = (known after apply)
+      + stop_before_destroy = false
+      + updated             = (known after apply)
+
+      + network {
+          + access_network = false
+          + fixed_ip_v4    = (known after apply)
+          + fixed_ip_v6    = (known after apply)
+          + floating_ip    = (known after apply)
+          + mac            = (known after apply)
+          + name           = (known after apply)
+          + port           = (known after apply)
+          + uuid           = (known after apply)
+        }
+    }
+
+  # module.bastion.openstack_compute_keypair_v2.key-pair[0] will be created
+  + resource "openstack_compute_keypair_v2" "key-pair" {
+      + fingerprint = (known after apply)
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + private_key = (sensitive value)
+      + public_key  = <<-EOT
+            ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGh8VGfqmzs3bNWS3jvR9tSQj9iW3oRbGd4JXsIHucoJNRJMMnmJvgpgcL38RKF2MEBj4GkwTJ0WKOFjsQsGOJZmDZFANRr2moIXwmabDfcfw84bh/+ew/VY1wwrW/gh2qkJTwbPccel9sgFjj7OlhhtGmol8fh5SbidPxGcPyInzqf+Gw6deggu8Ub4wdjorkti/StObYqruhJXKy5DoHrRCn7TXoZyLXmeyt8ZDzv35FrcLqAi2xhz6HmfBnZ+sXR9KY70PJMEX+gx1IG/MvtMOcAdtNr5eNKOOV0pr+WzQjZsl90QLFr6N4cq49yvP/6w6aEhVaA6Szu7Md9CBZ azuread\kaushiktalathi@DESKTOP-Q6R700E
+        EOT
+      + region      = (known after apply)
+      + user_id     = (known after apply)
+    }
+
+  # module.bootstrapcomplete.null_resource.bootstrap_complete will be created
+  + resource "null_resource" "bootstrap_complete" {
+      + id = (known after apply)
+    }
+
+  # module.bootstrapconfig.null_resource.bootstrap_config will be created
+  + resource "null_resource" "bootstrap_config" {
+      + id = (known after apply)
+    }
+
+  # module.bootstrapnode.data.ignition_config.bootstrap will be read during apply
+  # (config refers to values not yet known)
+ <= data "ignition_config" "bootstrap" {
+      + files    = [
+          + jsonencode(
+                {
+                  + contents  = {
+                      + source       = "data:text/plain;charset=utf-8;base64,Ym9vdHN0cmFwCg=="
+                      + verification = {}
+                    }
+                  + group     = {}
+                  + mode      = 420
+                  + overwrite = true
+                  + path      = "/etc/hostname"
+                  + user      = {}
+                }
+            ),
+        ]
+      + id       = (known after apply)
+      + rendered = (known after apply)
+
+      + merge {
+          + source = (known after apply)
+        }
+    }
+
+  # module.bootstrapnode.openstack_compute_instance_v2.bootstrap[0] will be created
+  + resource "openstack_compute_instance_v2" "bootstrap" {
+      + access_ip_v4        = (known after apply)
+      + access_ip_v6        = (known after apply)
+      + all_metadata        = (known after apply)
+      + all_tags            = (known after apply)
+      + availability_zone   = "e980"
+      + created             = (known after apply)
+      + flavor_id           = "b16967a1-0aa4-431b-8b5d-292fd9133606"
+      + flavor_name         = (known after apply)
+      + force_delete        = false
+      + id                  = (known after apply)
+      + image_id            = "21cf72bc-ed65-4bff-b83f-843b4a7ac4f4"
+      + image_name          = (known after apply)
+      + name                = (known after apply)
+      + power_state         = "active"
+      + region              = (known after apply)
+      + security_groups     = (known after apply)
+      + stop_before_destroy = false
+      + updated             = (known after apply)
+      + user_data           = (known after apply)
+
+      + network {
+          + access_network = false
+          + fixed_ip_v4    = (known after apply)
+          + fixed_ip_v6    = (known after apply)
+          + floating_ip    = (known after apply)
+          + mac            = (known after apply)
+          + name           = (known after apply)
+          + port           = (known after apply)
+          + uuid           = (known after apply)
+        }
+    }
+
+  # module.helpernode.null_resource.config will be created
+  + resource "null_resource" "config" {
+      + id       = (known after apply)
+      + triggers = {
+          + "bootstrap_count" = (known after apply)
+          + "master_count"    = (known after apply)
+          + "worker_count"    = "0"
+        }
+    }
+
+  # module.install.null_resource.install will be created
+  + resource "null_resource" "install" {
+      + id       = (known after apply)
+      + triggers = {
+          + "worker_count" = "0"
+        }
+    }
+
+  # module.install.null_resource.upgrade[0] will be created
+  + resource "null_resource" "upgrade" {
+      + id = (known after apply)
+    }
+
+  # module.installconfig.null_resource.install_config will be created
+  + resource "null_resource" "install_config" {
+      + id       = (known after apply)
+      + triggers = {
+          + "worker_count" = "0"
+        }
+    }
+
+  # module.installconfig.null_resource.pre_install[0] will be created
+  + resource "null_resource" "pre_install" {
+      + id = (known after apply)
+    }
+
+  # module.masternodes.data.ignition_config.master[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "ignition_config" "master" {
+      + files    = [
+          + jsonencode(
+                {
+                  + contents  = {
+                      + source       = "data:text/plain;charset=utf-8;base64,bWFzdGVyLTAK"
+                      + verification = {}
+                    }
+                  + group     = {}
+                  + mode      = 420
+                  + overwrite = true
+                  + path      = "/etc/hostname"
+                  + user      = {}
+                }
+            ),
+        ]
+      + id       = (known after apply)
+      + rendered = (known after apply)
+      + systemd  = []
+
+      + merge {
+          + source = (known after apply)
+        }
+    }
+
+  # module.masternodes.data.ignition_config.master[1] will be read during apply
+  # (config refers to values not yet known)
+ <= data "ignition_config" "master" {
+      + files    = [
+          + jsonencode(
+                {
+                  + contents  = {
+                      + source       = "data:text/plain;charset=utf-8;base64,bWFzdGVyLTEK"
+                      + verification = {}
+                    }
+                  + group     = {}
+                  + mode      = 420
+                  + overwrite = true
+                  + path      = "/etc/hostname"
+                  + user      = {}
+                }
+            ),
+        ]
+      + id       = (known after apply)
+      + rendered = (known after apply)
+      + systemd  = []
+
+      + merge {
+          + source = (known after apply)
+        }
+    }
+
+  # module.masternodes.data.ignition_config.master[2] will be read during apply
+  # (config refers to values not yet known)
+ <= data "ignition_config" "master" {
+      + files    = [
+          + jsonencode(
+                {
+                  + contents  = {
+                      + source       = "data:text/plain;charset=utf-8;base64,bWFzdGVyLTIK"
+                      + verification = {}
+                    }
+                  + group     = {}
+                  + mode      = 420
+                  + overwrite = true
+                  + path      = "/etc/hostname"
+                  + user      = {}
+                }
+            ),
+        ]
+      + id       = (known after apply)
+      + rendered = (known after apply)
+      + systemd  = []
+
+      + merge {
+          + source = (known after apply)
+        }
+    }
+
+  # module.masternodes.openstack_compute_instance_v2.master[0] will be created
+  + resource "openstack_compute_instance_v2" "master" {
+      + access_ip_v4        = (known after apply)
+      + access_ip_v6        = (known after apply)
+      + all_metadata        = (known after apply)
+      + all_tags            = (known after apply)
+      + availability_zone   = "e980"
+      + created             = (known after apply)
+      + flavor_id           = "81002031-afef-475f-b011-6d782be21535"
+      + flavor_name         = (known after apply)
+      + force_delete        = false
+      + id                  = (known after apply)
+      + image_id            = "21cf72bc-ed65-4bff-b83f-843b4a7ac4f4"
+      + image_name          = (known after apply)
+      + name                = (known after apply)
+      + power_state         = "active"
+      + region              = (known after apply)
+      + security_groups     = (known after apply)
+      + stop_before_destroy = false
+      + updated             = (known after apply)
+      + user_data           = (known after apply)
+
+      + network {
+          + access_network = false
+          + fixed_ip_v4    = (known after apply)
+          + fixed_ip_v6    = (known after apply)
+          + floating_ip    = (known after apply)
+          + mac            = (known after apply)
+          + name           = (known after apply)
+          + port           = (known after apply)
+          + uuid           = (known after apply)
+        }
+    }
+
+  # module.masternodes.openstack_compute_instance_v2.master[1] will be created
+  + resource "openstack_compute_instance_v2" "master" {
+      + access_ip_v4        = (known after apply)
+      + access_ip_v6        = (known after apply)
+      + all_metadata        = (known after apply)
+      + all_tags            = (known after apply)
+      + availability_zone   = "e980"
+      + created             = (known after apply)
+      + flavor_id           = "81002031-afef-475f-b011-6d782be21535"
+      + flavor_name         = (known after apply)
+      + force_delete        = false
+      + id                  = (known after apply)
+      + image_id            = "21cf72bc-ed65-4bff-b83f-843b4a7ac4f4"
+      + image_name          = (known after apply)
+      + name                = (known after apply)
+      + power_state         = "active"
+      + region              = (known after apply)
+      + security_groups     = (known after apply)
+      + stop_before_destroy = false
+      + updated             = (known after apply)
+      + user_data           = (known after apply)
+
+      + network {
+          + access_network = false
+          + fixed_ip_v4    = (known after apply)
+          + fixed_ip_v6    = (known after apply)
+          + floating_ip    = (known after apply)
+          + mac            = (known after apply)
+          + name           = (known after apply)
+          + port           = (known after apply)
+          + uuid           = (known after apply)
+        }
+    }
+
+  # module.masternodes.openstack_compute_instance_v2.master[2] will be created
+  + resource "openstack_compute_instance_v2" "master" {
+      + access_ip_v4        = (known after apply)
+      + access_ip_v6        = (known after apply)
+      + all_metadata        = (known after apply)
+      + all_tags            = (known after apply)
+      + availability_zone   = "e980"
+      + created             = (known after apply)
+      + flavor_id           = "81002031-afef-475f-b011-6d782be21535"
+      + flavor_name         = (known after apply)
+      + force_delete        = false
+      + id                  = (known after apply)
+      + image_id            = "21cf72bc-ed65-4bff-b83f-843b4a7ac4f4"
+      + image_name          = (known after apply)
+      + name                = (known after apply)
+      + power_state         = "active"
+      + region              = (known after apply)
+      + security_groups     = (known after apply)
+      + stop_before_destroy = false
+      + updated             = (known after apply)
+      + user_data           = (known after apply)
+
+      + network {
+          + access_network = false
+          + fixed_ip_v4    = (known after apply)
+          + fixed_ip_v6    = (known after apply)
+          + floating_ip    = (known after apply)
+          + mac            = (known after apply)
+          + name           = (known after apply)
+          + port           = (known after apply)
+          + uuid           = (known after apply)
+        }
+    }
+
+  # module.network.openstack_networking_port_v2.bastion_port[0] will be created
+  + resource "openstack_networking_port_v2" "bastion_port" {
+      + admin_state_up         = true
+      + all_fixed_ips          = (known after apply)
+      + all_security_group_ids = (known after apply)
+      + all_tags               = (known after apply)
+      + device_id              = (known after apply)
+      + device_owner           = (known after apply)
+      + dns_assignment         = (known after apply)
+      + dns_name               = (known after apply)
+      + id                     = (known after apply)
+      + mac_address            = (known after apply)
+      + name                   = (known after apply)
+      + network_id             = "1762f355-b17e-4d13-9bca-d5b53c929ab0"
+      + port_security_enabled  = (known after apply)
+      + qos_policy_id          = (known after apply)
+      + region                 = (known after apply)
+      + tenant_id              = (known after apply)
+
+      + binding (known after apply)
+
+      + fixed_ip {
+          + subnet_id  = "ae643a65-d0fc-4408-90c6-a820340bfade"
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.network.openstack_networking_port_v2.bootstrap_port[0] will be created
+  + resource "openstack_networking_port_v2" "bootstrap_port" {
+      + admin_state_up         = true
+      + all_fixed_ips          = (known after apply)
+      + all_security_group_ids = (known after apply)
+      + all_tags               = (known after apply)
+      + device_id              = (known after apply)
+      + device_owner           = (known after apply)
+      + dns_assignment         = (known after apply)
+      + dns_name               = (known after apply)
+      + id                     = (known after apply)
+      + mac_address            = (known after apply)
+      + name                   = (known after apply)
+      + network_id             = "1762f355-b17e-4d13-9bca-d5b53c929ab0"
+      + port_security_enabled  = (known after apply)
+      + qos_policy_id          = (known after apply)
+      + region                 = (known after apply)
+      + tenant_id              = (known after apply)
+
+      + binding (known after apply)
+
+      + fixed_ip {
+          + subnet_id  = "ae643a65-d0fc-4408-90c6-a820340bfade"
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.network.openstack_networking_port_v2.master_port[0] will be created
+  + resource "openstack_networking_port_v2" "master_port" {
+      + admin_state_up         = true
+      + all_fixed_ips          = (known after apply)
+      + all_security_group_ids = (known after apply)
+      + all_tags               = (known after apply)
+      + device_id              = (known after apply)
+      + device_owner           = (known after apply)
+      + dns_assignment         = (known after apply)
+      + dns_name               = (known after apply)
+      + id                     = (known after apply)
+      + mac_address            = (known after apply)
+      + name                   = (known after apply)
+      + network_id             = "1762f355-b17e-4d13-9bca-d5b53c929ab0"
+      + port_security_enabled  = (known after apply)
+      + qos_policy_id          = (known after apply)
+      + region                 = (known after apply)
+      + tenant_id              = (known after apply)
+
+      + binding (known after apply)
+
+      + fixed_ip {
+          + subnet_id  = "ae643a65-d0fc-4408-90c6-a820340bfade"
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.network.openstack_networking_port_v2.master_port[1] will be created
+  + resource "openstack_networking_port_v2" "master_port" {
+      + admin_state_up         = true
+      + all_fixed_ips          = (known after apply)
+      + all_security_group_ids = (known after apply)
+      + all_tags               = (known after apply)
+      + device_id              = (known after apply)
+      + device_owner           = (known after apply)
+      + dns_assignment         = (known after apply)
+      + dns_name               = (known after apply)
+      + id                     = (known after apply)
+      + mac_address            = (known after apply)
+      + name                   = (known after apply)
+      + network_id             = "1762f355-b17e-4d13-9bca-d5b53c929ab0"
+      + port_security_enabled  = (known after apply)
+      + qos_policy_id          = (known after apply)
+      + region                 = (known after apply)
+      + tenant_id              = (known after apply)
+
+      + binding (known after apply)
+
+      + fixed_ip {
+          + subnet_id  = "ae643a65-d0fc-4408-90c6-a820340bfade"
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.network.openstack_networking_port_v2.master_port[2] will be created
+  + resource "openstack_networking_port_v2" "master_port" {
+      + admin_state_up         = true
+      + all_fixed_ips          = (known after apply)
+      + all_security_group_ids = (known after apply)
+      + all_tags               = (known after apply)
+      + device_id              = (known after apply)
+      + device_owner           = (known after apply)
+      + dns_assignment         = (known after apply)
+      + dns_name               = (known after apply)
+      + id                     = (known after apply)
+      + mac_address            = (known after apply)
+      + name                   = (known after apply)
+      + network_id             = "1762f355-b17e-4d13-9bca-d5b53c929ab0"
+      + port_security_enabled  = (known after apply)
+      + qos_policy_id          = (known after apply)
+      + region                 = (known after apply)
+      + tenant_id              = (known after apply)
+
+      + binding (known after apply)
+
+      + fixed_ip {
+          + subnet_id  = "ae643a65-d0fc-4408-90c6-a820340bfade"
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+Plan: 23 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bastion_ip          = (known after apply)
+  + bastion_ssh_command = (known after apply)
+  + bootstrap_ip        = (known after apply)
+  + cluster_id          = (known after apply)
+  + etc_hosts_entries   = (known after apply)
+  + install_status      = "COMPLETED"
+  + master_ips          = [
+      + (known after apply),
+      + (known after apply),
+      + (known after apply),
+    ]
+  + oc_server_url       = (known after apply)
+  + storageclass_name   = "nfs-storage-provisioner"
+  + web_console_url     = (known after apply)
+  + worker_ips          = []
+╷
+│ Warning: Value for undeclared variable
+│
+│ The root module does not declare a variable named "scg_flavor_is_public" but a value was found in file "data\\var-discon-cluster.var". If you meant to use this value, add a "variable" block to the
+│ configuration.
+│
+│ To silence these warnings, use TF_VAR_... environment variables to provide certain "global" settings to all configurations in your organization. To reduce the verbosity of these warnings, use the
+│ -compact-warnings option.
+╵
+╷
+│ Warning: Value for undeclared variable
+│
+│ The root module does not declare a variable named "ocp_release_name" but a value was found in file "data\\var-discon-cluster.var". If you meant to use this value, add a "variable" block to the
+│ configuration.
+│
+│ To silence these warnings, use TF_VAR_... environment variables to provide certain "global" settings to all configurations in your organization. To reduce the verbosity of these warnings, use the
+│ -compact-warnings option.
+╵
+╷
+│ Warning: Argument is deprecated
+│
+│   with provider["registry.terraform.io/terraform-provider-openstack/openstack"],
+│   on ocp.tf line 21, in provider "openstack":
+│   21: provider "openstack" {
+│
+│ Users not using loadbalancer resources can ignore this message. Support for neutron-lbaas will be removed on next major release. Octavia will be the only supported method for loadbalancer resources. Users
+│ using octavia will have to remove 'use_octavia' option from the provider configuration block. Users using neutron-lbaas will have to migrate/upgrade to octavia.
+│
+│ (and one more similar warning elsewhere)
+╵
